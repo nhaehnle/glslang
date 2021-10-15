@@ -278,6 +278,7 @@ extern int yylex(YYSTYPE*, TParseContext&);
 %token <lex> SPIRV_INSTRUCTION SPIRV_EXECUTION_MODE SPIRV_EXECUTION_MODE_ID
 %token <lex> SPIRV_DECORATE SPIRV_DECORATE_ID SPIRV_DECORATE_STRING
 %token <lex> SPIRV_TYPE SPIRV_STORAGE_CLASS SPIRV_BY_REFERENCE SPIRV_LITERAL
+%token <lex> SPIRV_ID
 
 
 
@@ -4364,8 +4365,13 @@ spirv_type_parameter_list
     }
 
 spirv_type_parameter
-    : constant_expression {
-        $$ = parseContext.makeSpirvTypeParameters($1->getLoc(), $1->getAsConstantUnion());
+    : SPIRV_ID constant_expression {
+        $$ = parseContext.makeSpirvTypeParameters($2->getLoc(), $2, true);
+    }
+    | constant_expression {
+        if (!$1->getAsConstantUnion() || !$1->getAsConstantUnion()->isLiteral())
+            parseContext.error($1->getLoc(), "expected a literal constant (did you mean to use 'spirv_id'?)", "", "");
+        $$ = parseContext.makeSpirvTypeParameters($1->getLoc(), $1, false);
     }
 
 spirv_instruction_qualifier

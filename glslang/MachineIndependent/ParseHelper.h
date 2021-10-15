@@ -479,7 +479,8 @@ public:
                                             const TIntermAggregate* extensions, const TIntermAggregate* capabilities);
     TSpirvRequirement* mergeSpirvRequirements(const TSourceLoc& loc, TSpirvRequirement* spirvReq1,
                                                 TSpirvRequirement* spirvReq2);
-    TSpirvTypeParameters* makeSpirvTypeParameters(const TSourceLoc& loc, const TIntermConstantUnion* constant);
+    TSpirvTypeParameters* makeSpirvTypeParameters(const TSourceLoc& loc, const TIntermTyped* constant,
+                                                  bool spirvId);
     TSpirvTypeParameters* mergeSpirvTypeParameters(TSpirvTypeParameters* spirvTypeParams1,
                                                    TSpirvTypeParameters* spirvTypeParams2);
     TSpirvInstruction* makeSpirvInstruction(const TSourceLoc& loc, const TString& name, const TString& value);

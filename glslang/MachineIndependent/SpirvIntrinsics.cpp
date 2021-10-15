@@ -275,7 +275,7 @@ void TPublicType::setSpirvType(const TSpirvInstruction& spirvInst, const TSpirvT
         spirvType->typeParams = *typeParams;
 }
 
-TSpirvTypeParameters* TParseContext::makeSpirvTypeParameters(const TSourceLoc& loc, const TIntermConstantUnion* constant)
+TSpirvTypeParameters* TParseContext::makeSpirvTypeParameters(const TSourceLoc& loc, const TIntermTyped* constant, bool spirvId)
 {
     TSpirvTypeParameters* spirvTypeParams = new TSpirvTypeParameters;
     if (constant->getBasicType() != EbtFloat &&
@@ -286,7 +286,7 @@ TSpirvTypeParameters* TParseContext::makeSpirvTypeParameters(const TSourceLoc& l
         error(loc, "this type not allowed", constant->getType().getBasicString(), "");
     else {
         assert(constant);
-        spirvTypeParams->push_back(TSpirvTypeParameter(constant));
+        spirvTypeParams->push_back(TSpirvTypeParameter(constant, spirvId));
     }
 
     return spirvTypeParams;

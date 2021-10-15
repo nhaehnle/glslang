@@ -598,6 +598,7 @@ void TScanContext::fillInKeywordMap()
     (*KeywordMap)["spirv_storage_class"] =     SPIRV_STORAGE_CLASS;
     (*KeywordMap)["spirv_by_reference"] =      SPIRV_BY_REFERENCE;
     (*KeywordMap)["spirv_literal"] =           SPIRV_LITERAL;
+    (*KeywordMap)["spirv_id"] =                SPIRV_ID;
 #endif
 
     (*KeywordMap)["sampler2D"] =               SAMPLER2D;
@@ -1770,6 +1771,7 @@ int TScanContext::tokenizeIdentifier()
     case SPIRV_STORAGE_CLASS:
     case SPIRV_BY_REFERENCE:
     case SPIRV_LITERAL:
+    case SPIRV_ID:
         if (parseContext.symbolTable.atBuiltInLevel() ||
             parseContext.extensionTurnedOn(E_GL_EXT_spirv_intrinsics))
             return keyword;
